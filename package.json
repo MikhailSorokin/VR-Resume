@@ -1,0 +1,15 @@
+{
+  "name": "vrresume",
+  "version": "1.0.0",
+  "description": "This is a resume that I am making that will have a lot of cool visual elements and interaction using webvr.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-MIKE:MikhailSorokin/VR-Resume.git"
+  },
+  "author": "Mikhail Sorokin",
+  "license": "ISC"
+}
