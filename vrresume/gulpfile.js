@@ -11,14 +11,15 @@ gulp.task('gulp_nodemon', function () {
 });
 
 gulp.task('sync', function(){
-browserSync.init({
-port: 8006,                      //this can be any port, it will show our app
-proxy: 'http://localhost:8005/', //this is the port where express server works
-ui: {port: 8003},                //UI, can be any port
-reloadDelay: 1000                //Important, otherwise syncing will not work
-});
-gulp.watch(['./public/**/*.html', './public/**/*.js', './public/**/*.css']).on("change",
-browserSync.reload);
-});
+  browserSync.init({
+  port: 8006,                      //this can be any port, it will show our app
+  proxy: 'http://localhost:8005/', //this is the port where express server works
+  ui: {port: 8003},                //UI, can be any port
+  reloadDelay: 1000                //Important, otherwise syncing will not work
+  })
 
-gulp.task('default', ['gulp_nodemon', 'sync']);
+  gulp.watch(['./public/**/*.html', './public/**/*.js', './public/**/*.css']).on("change",
+  browserSync.reload)
+})
+
+gulp.task('default', ['gulp_nodemon', 'sync'])
