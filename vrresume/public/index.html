@@ -13,8 +13,11 @@
 <body>
   <script>
 
-    var target
-    var minY
+    let target
+    let minY
+    let deltaIncr = 0
+
+    //let targets = []
 
     const windowHalfX = window.innerWidth / 2;
     const windowHalfY = window.innerHeight / 2;
@@ -43,14 +46,14 @@
     renderer.vr.enabled = true;
     container.appendChild(renderer.domElement)
 
-    //light
     let ambientLight = new THREE.AmbientLight(0xcccccc, 0.4)
     scene.add(ambientLight)
 
+    //This is the main light, the light above is just for aesthetics
     let pointLight = new THREE.PointLight(0xffffff, 0.8)
     camera.add(pointLight)
 
-      scene.add(camera)
+    scene.add(camera)
 
     /* ------------- Here is the load model functionality --------- */
     let manager = new THREE.LoadingManager(loadModel)
@@ -72,7 +75,6 @@
     //Important to enable VR - TODO maybe customize the button look
     document.body.appendChild(WEBVR.createButton(renderer))
 
-
     //Controls
     let controls = new THREE.FlyControls( camera );
 
@@ -83,8 +85,6 @@
     controls.dragToLook = false;
 
     window.addEventListener('resize', onWindowResize, false)
-
-    init()
 
     loadModel()
 
@@ -124,8 +124,6 @@
       renderer.setAnimationLoop(render)
     }
 
-    let deltaIncr = 0
-
     function render() {
       let delta = clock.getDelta()
 
@@ -136,36 +134,15 @@
 
 
       if (target) {
-        console.log(`sin value ${Math.sin(deltaIncr)}`)
+        //console.log(`sin value ${Math.sin(deltaIncr)}`)
         target.position.y = minY + Math.sin(deltaIncr) * 3
       }
 
-      /*let dLength = camera.position.length();
-
-      d = (target - 10 * 1.01)
-
-      controls.movementSpeed = 0.5 * d
+      /*
+      controls.movementSpeed = TODO
       controls.update(delta)*/
 
       renderer.render( scene, camera );
-    }
-
-    //TODO - Get rid of this function and add the target functionality
-    function init() {
-      /*const mapUrl = "images/webvr-logo-512.jpeg"
-      let map = THREE.ImageUtils.loadTexture(mapUrl)
-
-      //Create a Basic Material
-      let material = new THREE.MeshBasicMaterial({map : map})
-
-      let geometry = new THREE.BoxGeometry(2, 2, 2)
-
-      //Create cube geometry
-      cube = new THREE.Mesh(geometry, material)
-
-      cube.position.z = -6
-
-      scene.add(cube)*/
     }
 
     function onWindowResize() {
