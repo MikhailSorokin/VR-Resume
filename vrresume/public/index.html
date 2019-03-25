@@ -17,7 +17,7 @@
     let minY
     let deltaIncr = 0
 
-    //let targets = []
+    let targets = []
 
     const windowHalfX = window.innerWidth / 2;
     const windowHalfY = window.innerHeight / 2;
@@ -56,6 +56,7 @@
     scene.add(camera)
 
     /* ------------- Here is the load model functionality --------- */
+
     let manager = new THREE.LoadingManager(loadModel)
 
     //TODO - Create a interactive loading bar
@@ -64,9 +65,18 @@
     }
 
     let loader = new THREE.OBJLoader(manager)
-    loader.load('models/target.obj', (obj) => {
-      target = obj
-    }, onProgress, onError)
+
+    //Load three different targets and put them in different positions
+    let xPosition = 0, zPosition = -10
+    for (var i = 0; i < 3; i++) {
+
+      loader.load('models/target.obj', (obj) => {
+        console.log(i)
+        target = obj
+        if (i == 1) xPosition = -10
+        if (i == 2) xPosition = 10
+      }, onProgress, onError)
+    }
 
     //Texture
 
@@ -98,26 +108,6 @@
     }
 
     function onError() { //TODO - do something }
-    }
-
-    async function loadModel() {
-
-      if (target) {
-        target.traverse((child) => {
-          if (child.isMesh) child.material.map = texture
-
-
-        })
-
-        //Once the model is loaded, add to scene
-
-        target.position.z = -10
-        target.rotation.y = 0
-
-        minY = target.position.y
-
-        scene.add(target)
-      }
     }
 
     function animate() {
