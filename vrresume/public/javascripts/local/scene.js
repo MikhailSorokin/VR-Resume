@@ -1,5 +1,6 @@
 
 import Targets from './target.js'
+import Hud from './hud'
 
 export default class Scene {
 
@@ -86,6 +87,8 @@ export default class Scene {
           this.targets.push(target2)
           this.targets.push(target3)
           console.log('loaded')
+
+          this.hud = new Hud(this.scene, this.loader)
           //Run the loop
           this.animate()
       }).catch(e => {
