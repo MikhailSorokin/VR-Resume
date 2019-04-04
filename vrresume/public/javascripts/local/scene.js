@@ -1,6 +1,6 @@
 
 import Targets from './target.js'
-import Hud from './hud'
+import Hud from './hud/index.js'
 
 export default class Scene {
 
@@ -59,6 +59,7 @@ export default class Scene {
       this.texture = new THREE.TextureLoader().load('models/textures/target_diffuse.jpg')
 
       //Load three different targets and put them in different positions
+      this.hud = new Hud(this.scene, this.loader)
       this.loadModels()
 
       //Important to enable VR - TODO maybe customize the button look
@@ -81,14 +82,12 @@ export default class Scene {
 
   async loadModels() {
       Promise.all([
-          Targets(this.loader, this.scene, this.texture)
+          Targets(this.loader, this.scene, this.texture),
+          this.hud.setupText()
       ]).then(([{target1, target2, target3}]) => {
           this.targets.push(target1)
           this.targets.push(target2)
           this.targets.push(target3)
-          console.log('loaded')
-
-          this.hud = new Hud(this.scene, this.loader)
           //Run the loop
           this.animate()
       }).catch(e => {
@@ -115,7 +114,6 @@ export default class Scene {
     for (let target of this.targets) {
       //console.log(`sin value ${Math.sin(this.deltaIncr)}`)
       if (target) {
-        console.log(target.name)
         target.position.y = this.minY + Math.sin(this.deltaIncr) * 3
       }
     }
